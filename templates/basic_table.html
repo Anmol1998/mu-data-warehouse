@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if table_headers is defined and table_data_values is defined %}
+    <form action="/download_data" method="post">
+      <input type="submit" value="ExportToCSV">
+    </form>
+    <table id="data" class="table table-striped">
+      <thead>
+        <tr>
+          {% for header in table_headers %}
+            <th>{{ header  }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for table_row_data in table_data_values %}
+            <tr>
+              {% for table_data in table_row_data %}
+                <td>{{ table_data }}</td>
+              {% endfor %}
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        columns: [
+          null,
+          {searchable: false},
+          {orderable: false, searchable: false},
+          {orderable: false, searchable: false},
+          null],
+      });
+    });
+  </script>
+{% endblock %}

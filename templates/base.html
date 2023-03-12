@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      form {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr); /* 4 equal-width columns */
+        grid-gap: 10px; /* add some gap between the elements */
+      }
+      label, input, select {
+        width: 100%; /* fill the entire column */
+      }
+    </style>
+    <title>{{ title }}</title>
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dataTables.bootstrap5.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>{{ title }}</h1>
+      <form id="filter-form" action="/submit_query" method="post">
+        <label>name</label>
+        <input type="text" name="name" value="{{ request.form['name'] }}"><br>
+        <label>father_name</label>
+        <input type="text" name="father_name" value="{{ request.form['father_name'] }}"><br>
+        <label>father name</label>
+        <input type="text" name="father name" value="{{ request.form['father name'] }}"><br>
+        <label>phone_number</label>
+        <input type="tel" name="phone_number" value="{{ request.form['phone_number'] }}"><br>
+        <label>roll_no</label>
+        <input type="text" name="roll_no" value="{{ request.form['roll_no'] }}"><br>
+        <label>date_of_birth</label>
+        <input type="date" name="date_of_birth" value="{{ request.form['date_of_birth'] }}"><br>
+        <label>email</label>
+        <input type="text" name="email" value="{{ request.form['email'] }}"><br>
+        <label>email2</label>
+        <input type="text" name="email2" value="{{ request.form['email2'] }}"><br>
+        <label>pincode</label>
+        <input type="text" name="pincode" value="{{ request.form['pincode'] }}"><br>
+        <label>application_no</label>
+        <input type="text" name="application_no" value="{{ request.form['application_no'] }}"><br>
+        {% for label, value in filter_atts.items() %}
+          <label>{{ label }}</label>
+          <select name={{ label }}>
+            <option value="ANY VALUE">ANY VALUE</option>
+            {% for val in value %}
+              <option value={{ val }}>{{ val }}</option>
+            {% endfor %}
+          </select>
+          <br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+      </form>
+      <hr>
+      {% block content %}{% endblock %}
+    </div>
+    <script type="text/javascript" charset="utf8" src="{{ url_for('static',filename='js/jquery-3.6.0.min.js') }}"></script>
+    <script type="text/javascript" charset="utf8" src="{{ url_for('static',filename='js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" charset="utf8" src="{{ url_for('static',filename='js/dataTables.bootstrap5.js') }}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
